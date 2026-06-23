@@ -132,7 +132,7 @@
 
     <section class="field-group">
       <label for="computer-guess">Computer guess</label>
-      <input id="computer-guess" type="text" value="Waiting for the computer..." />
+      <input id="computer-guess" type="text" placeholder="computer guess will appear here" readonly />
     </section>
 
     <div class="button-row">
@@ -142,34 +142,41 @@
 
     <div class="status">
       <strong>Game status</strong>
-      The computer will compare its guess to your secret number and tell you whether it is correct, too high, or too low.
+      <p id = "status">
+
+        The computer will compare its guess to your secret number and tell you whether it is correct, too high, or too low.
+      </p>
     </div>
   </article>
 </body>
 <script>
     // JavaScript logic for the number guessing game can be added here
-    const player_guess = document.getElementById('secret-number').value;
     const submit = document.getElementById('submit-guess');
     const reset = document.getElementById('reset-game');
-
-    submit.addEventListener('click', setInterval((player_guess) => {
+    
+    submit.addEventListener('click', () => {
+      const player_g = document.querySelector('#secret-number').value;
         const computer_guess = Math.floor(Math.random() * 100) + 1;
-        document.getElementById('computer-guess').innerHTML = `${computer_guess}`;
-        if(computer_guess == player_guess){
-            document.querySelector('.status').innerHTML = `<strong>Game status</strong>
-            The computer guessed ${computer_guess}. Your secret number is ${player_guess}. <br><br> <strong>Congratulations! The computer guessed your number correctly!</strong>`;
-        } else if (computer_guess > player_guess) {
-            document.querySelector('.status').innerHTML = `<strong>Game status</strong>
-            The computer guessed ${computer_guess}. Your secret number is ${player_guess}. <br><br> <strong>The computer's guess is too high.</strong>`;
+        document.getElementById('computer-guess').value = `${computer_guess}`;
+        if(computer_guess == player_g){
+            document.querySelector('#status').innerHTML = `The computer guessed ${computer_guess}. Your secret number is ${player_g}. <br><br> <strong>Congratulations! The computer guessed your number correctly!</strong>`;
+        } else if (computer_guess > player_g) {
+            document.querySelector('#status').innerHTML =`The computer guessed ${computer_guess}. Your secret number is ${player_g}. <br><br> <strong>The computer's guess is too high.</strong>`;
         } else {
-             document.querySelector('.status').innerHTML = `<strong>Game status</strong>
-             The computer guessed ${computer_guess}. Your secret number is ${player_guess}. <br><br> <strong>The computer's guess is too low.</strong>`;
+             document.querySelector('#status').innerHTML = `The computer guessed ${computer_guess}. Your secret number is ${player_g}. <br><br> <strong>The computer's guess is too low.</strong>`;
         }
-        document.querySelector('.status').innerHTML = `<strong>Game status</strong>
-        The computer guessed ${computer_guess}. Your secret number is ${player_guess}.`;
-
+       
 
     
-    },2000));
+    });
+
+    // for reset button 
+    reset.addEventListener('click', () => {
+      document.querySelector('#status').innerHTML = "The computer will compare its guess to your secret number and tell you whether it is correct, too high, or too low.";
+      document.querySelector('#secret-number').placeholder = 'Enter a number between 1 and 100';
+      document.querySelector('#secret-number').value = '';
+      document.querySelector('#computer-guess').placeholder = 'computer guess will appear here';
+      document.querySelector('#computer-guess').value = ''; 
+    });
     </script>
     </html>

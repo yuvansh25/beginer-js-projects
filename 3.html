@@ -36,7 +36,9 @@
     <div class="clock" id="clock">00:00:00</div>
 
 <script>
-function updateClock() {
+
+
+setInterval(function updateClock() {
     const now = new Date();
 
     let hours = String(now.getHours()).padStart(2, '0');
@@ -45,10 +47,8 @@ function updateClock() {
 
     document.getElementById('clock').textContent =
         `${hours}:${minutes}:${seconds}`;
-}
+}, 1000);
 
-setInterval(updateClock, 1000);
-updateClock();
 </script>
 
 </body>

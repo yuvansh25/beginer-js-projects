@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number Guessing Game</title>
+  <style>
+    :root {
+      --bg: #121a2c;
+      --card: #1e2743;
+      --accent: #5fb7ff;
+      --text: #e7efff;
+      --muted: #a3b0d1;
+      --border: rgba(95, 183, 255, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top, #273c67 0%, #121a2c 55%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .game-card {
+      width: min(540px, 100%);
+      padding: 32px;
+      border-radius: 24px;
+      background: rgba(30, 39, 67, 0.95);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .game-card h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 2.8vw, 2.6rem);
+      letter-spacing: 0.02em;
+    }
+
+    .game-card p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .field-group label {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .field-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .field-group input:focus {
+      outline: 2px solid rgba(95, 183, 255, 0.32);
+      border-color: rgba(95, 183, 255, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button-row button {
+      flex: 1 1 160px;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #5fb7ff, #4f89f9);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button-row button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(95, 183, 255, 0.22);
+    }
+
+    .status {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 96px;
+    }
+
+    .status strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #c7e9ff;
+    }
+  </style>
+</head>
+<body>
+  <article class="game-card">
+    <header>
+      <h1>Guess My Number</h1>
+      <p>Enter a secret number below. The computer will try to guess whether it is correct.</p>
+    </header>
+
+    <section class="field-group">
+      <label for="secret-number">Your secret number</label>
+      <input id="secret-number" type="number" placeholder="Enter a number between 1 and 100" />
+    </section>
+
+    <section class="field-group">
+      <label for="computer-guess">Computer guess</label>
+      <input id="computer-guess" type="text" value="Waiting for the computer..." />
+    </section>
+
+    <div class="button-row">
+      <button id="submit-guess" type="button">Submit Guess</button>
+      <button id="reset-game" type="button">Reset</button>
+    </div>
+
+    <div class="status">
+      <strong>Game status</strong>
+      The computer will compare its guess to your secret number and tell you whether it is correct, too high, or too low.
+    </div>
+  </article>
+</body>
+<script>
+    // JavaScript logic for the number guessing game can be added here
+    const player_guess = document.getElementById('secret-number').value;
+    const submit = document.getElementById('submit-guess');
+    const reset = document.getElementById('reset-game');
+
+    submit.addEventListener('click', setInterval((player_guess) => {
+        const computer_guess = Math.floor(Math.random() * 100) + 1;
+        document.getElementById('computer-guess').innerHTML = `${computer_guess}`;
+        if(computer_guess == player_guess){
+            document.querySelector('.status').innerHTML = `<strong>Game status</strong>
+            The computer guessed ${computer_guess}. Your secret number is ${player_guess}. <br><br> <strong>Congratulations! The computer guessed your number correctly!</strong>`;
+        } else if (computer_guess > player_guess) {
+            document.querySelector('.status').innerHTML = `<strong>Game status</strong>
+            The computer guessed ${computer_guess}. Your secret number is ${player_guess}. <br><br> <strong>The computer's guess is too high.</strong>`;
+        } else {
+             document.querySelector('.status').innerHTML = `<strong>Game status</strong>
+             The computer guessed ${computer_guess}. Your secret number is ${player_guess}. <br><br> <strong>The computer's guess is too low.</strong>`;
+        }
+        document.querySelector('.status').innerHTML = `<strong>Game status</strong>
+        The computer guessed ${computer_guess}. Your secret number is ${player_guess}.`;
+
+
+    
+    },2000));
+    </script>
+    </html>
